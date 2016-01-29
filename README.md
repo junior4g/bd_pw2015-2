@@ -1,5 +1,5 @@
 # Banco de dados
-Inserindo as seguintes atribuiçes:
+Trabalhando com as seguintes instruçoes:
 - Alterar
 - Excluir
 - Listar
