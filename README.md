@@ -1,1 +1,5 @@
-# bd_pw2015-2
+# Banco de dados
+Inserindo as seguintes atribuiçes:
+Alterar
+Excluir
+Listar
