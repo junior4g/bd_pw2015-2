@@ -1,5 +1,5 @@
 # Banco de dados
-Trabalhando com as seguintes instruçoes:
+Inserindo os comandos:
 - Alterar
 - Excluir
 - Listar
