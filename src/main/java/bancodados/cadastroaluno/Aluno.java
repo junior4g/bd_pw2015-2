@@ -47,72 +47,109 @@ public class Aluno {
 
 	public void incluir() {
 		try {
-			// ObtÈm a conex„o.
+			// Obt√©m a conex√£o.
 			String url = "jdbc:derby:C:\\banco-de-teste;create=true";
 			Connection conn = DriverManager.getConnection(url);
-			// Cria a sentenÁa SQL.
+			// Cria a senten√ßa SQL.
 			String sql = "insert into aluno (matricula, nome, fone, cpf) values (?, ?, ?, ?)";
-			// ObtÈm referÍncia para uma sentenÁa SQL.
+			// Obt√©m refer√™ncia para uma senten√ßa SQL.
 			PreparedStatement prepareStatement = conn.prepareStatement(sql);
 			prepareStatement.setString(1, matricula);
 			prepareStatement.setString(2, nome);
 			prepareStatement.setString(3, fone);
 			prepareStatement.setString(4, cpf);
-			// Executa a instruÁ„o SQL.
+			// Executa a instru√ß√£o SQL.
 			prepareStatement.executeUpdate();
-			// Fecha a sentenÁa.
+			// Fecha a senten√ßa.
 			prepareStatement.close();
-			// Fecha a conex„o.
+			// Fecha a conex√£o.
 			conn.close();
 		} catch (Throwable e) {
-			// Para repassar a exceÁ„o para o container tratar.
+			// Para repassar a exce√ß√£o para o container tratar.
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void alterar(String matricula1, String nome1, String fone1, String cpf1) {
 		try {
-			// ObtÈm a conex„o.
+			// Obt√©m a conex√£o.
 			String url = "jdbc:derby:C:\\banco-de-teste";
 			Connection conn = DriverManager.getConnection(url);
-			// Cria a sentenÁa SQL.
+			// Cria a senten√ßa SQL.
 			String sql = "update aluno set nome=?, fone=?, cpf=? where matricula=?";
-			// ObtÈm referÍncia para uma sentenÁa SQL.
+			// Obt√©m refer√™ncia para uma senten√ßa SQL.
 			PreparedStatement prepareStatement = conn.prepareStatement(sql);
 			prepareStatement.setString(4, matricula);
 			prepareStatement.setString(1, nome);
 			prepareStatement.setString(2, fone);
 			prepareStatement.setString(3, cpf);
-			// Executa a instruÁ„o SQL.
+			// Executa a instru√ß√£o SQL.
 			prepareStatement.executeUpdate();
-			// Fecha a sentenÁa.
+			// Fecha a senten√ßa.
 			prepareStatement.close();
-			// Fecha a conex„o.
+			// Fecha a conex√£o.
 			conn.close();
 		} catch (Throwable e) {
-			// Para repassar a exceÁ„o para o container tratar.
+			// Para repassar a exce√ß√£o para o container tratar.
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void excluir(String matricula1) {
 		try {
-			// ObtÈm a conex„o.
+			// Obt√©m a conex√£o.
 			String url = "jdbc:derby:C:\\banco-de-teste";
 			Connection conn = DriverManager.getConnection(url);
-			// Cria a sentenÁa SQL.
+			// Cria a senten√ßa SQL.
 			String sql = "delete from aluno where matricula=?";
-			// ObtÈm referÍncia para uma sentenÁa SQL.
+			// Obt√©m refer√™ncia para uma senten√ßa SQL.
 			PreparedStatement prepareStatement = conn.prepareStatement(sql);
 			prepareStatement.setString(1, matricula1);
-			// Executa a instruÁ„o SQL.
+			// Executa a instru√ß√£o SQL.
 			prepareStatement.executeUpdate();
 			prepareStatement.close();
 			conn.close();
 		} catch (Throwable e) {
-			// Para repassar a exceÁ„o para o container tratar.
+			// Para repassar a exce√ß√£o para o container tratar.
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static List<Aluno> listar() {
+	    List<Aluno> alunos = new ArrayList<Aluno>();
+	    try {
+	      
+	      //Obt√©m a conex√£o.
+	      String url = "jdbc:derby:C:\\banco-de-teste;create=true";
+	      Connection conn = DriverManager.getConnection(url);
+	      //Cria a senten√ßa SQL.
+	      String sql = "select * from aluno order by matricula";
+	      //Obt√©m refer√™ncia para uma senten√ßa SQL.
+	      PreparedStatement prepareStatement = conn.prepareStatement(sql);
+	      //Executa a instru√ß√£o SQL.
+	      ResultSet rs = prepareStatement.executeQuery();
+	      while (rs.next()) {
+
+	        Aluno a = new Aluno();
+	        a.setMatricula(rs.getString("matricula"));
+	        a.setNome(rs.getString("nome"));
+	        a.setFone(rs.getString("fone"));
+	        a.setCpf(rs.getString("cpf"));
+
+	        alunos.add(a);
+	      }
+	      //Fecha o ResultSet.
+	      rs.close();
+	      //Fecha a senten√ßa.
+	      prepareStatement.close();
+	      //Fecha a conex√£o.
+	      conn.close();
+	    } catch (Throwable e) {
+	      //Para repassar a exce√ß√£o para o container tratar.
+	      throw new RuntimeException(e);
+	    }
+
+	    return alunos;
 	}
 
 }
