@@ -1,4 +1,6 @@
 <!doctype html>
+<%@page import="bancodados.cadastroaluno.Aluno"%>
+<%@page import="java.util.List"%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -24,13 +26,13 @@
       <div class="modal-dialog" style="margin-bottom: 0">
         <div class="modal-content">
           <div class="panel-heading">
-            <h3 class="panel-title">Cadastro de Aluno</h3>
+            <h3 class="panel-title" href="#">Cadastro de Aluno</h3> 
           </div>
           <div class="panel-body">
             <form role="form">
               <fieldset>
                 <div class="form-group">
-                  <input class="form-control" placeholder="Matrícula" name="matricula"
+                  <input class="form-control" placeholder="Matricula" name="matricula"
                     type="text" value="${param.matricula}">
                 </div>
                 <div class="form-group">
@@ -48,52 +50,54 @@
                 <input type="submit" class="btn btn-sm btn-success" name="evento" value="Incluir">
 				<input type="submit" class="btn btn-sm btn-success" name="evento" value="Alterar"> 
 				<input type="submit" class="btn btn-sm btn-success" name="evento" value="Excluir">
+				<input type="button" class="btn btn-sm btn-success" onclick="location.href='?'" value="Limpar">
               </fieldset>
             </form>
             <br>
             <%
-            //Obtendo a variável definida no servlet.
-            bancodados.cadastroaluno.Aluno aluno = (bancodados.cadastroaluno.Aluno) request.getAttribute("aluno");
-            //Se parâmetros inválidos, ...
-            if (aluno.getMatricula() == null || aluno.getMatricula().trim().equals("")) {
-%>
-<!-- Aqui posso colocar HTML. -->
-<div class="alert alert-danger" role="alert">Informe a Matrícula.</div>
-<%
-            } else {
-              %>
-<!-- Aqui posso colocar HTML. -->
-<div class="alert alert-success" role="alert">
-Matrícula: <%=aluno.getMatricula()%>
-</div>
-              <%
-            }
+            	//Obtendo a variável definida no servlet.
+            	bancodados.cadastroaluno.Aluno aluno = (bancodados.cadastroaluno.Aluno) request.getAttribute("aluno");
+            	//Se parametros invalidos, ...
+            	if (aluno.getMatricula() == null || aluno.getMatricula().trim().equals("")) {
+			%>
+			<!-- Aqui posso colocar HTML. -->
+			<div class="alert alert-danger" role="alert">Informe a Matricula.</div>
+			<%
+            	} else {
             %>
-            
+			<!-- Aqui posso colocar HTML. -->
+			<div class="alert alert-success" role="alert">
+			Matricula: <%=aluno.getMatricula()%>
+			</div>
+            <%
+            	}
+            %>
             <table class="table">
-		<thead>
+			<thead>
 			<tr>
-			<th>Matrícula</th>
+			<th>Matricula</th>
 			<th>Nome</th>
 			<th>Fone</th>
 			<th>CPF</th>
 			<th></th>
 			<th></th>
 			</tr>
-		</thead>
-		<tbody>
-		<%
-		List<Aluno> alunos = (List<Aluno>) request.getAttribute("alunos");
-		if (alunos != null && !alunos.isEmpty()) {
-		for (Aluno a : alunos) {
-		%>
+			</thead>
+			<tbody>
+			<%
+				List<Aluno> alunos = (List<Aluno>) request.getAttribute("alunos");
+				if (alunos != null && !alunos.isEmpty()) {
+				for (Aluno a : alunos) {
+			%>
 			<tr>
 			<th><%=a.getMatricula()%></th>
 			<td><%=a.getNome()%></td>
 			<td><%=a.getFone()%></td>
 			<td><%=a.getCpf()%></td>
-			<td><a href="#">Alterar</a></td>
-			<td><a href="#">Excluir</a></td>
+
+			<td><a href="CadastroAluno?matricula=<%=a.getMatricula()%>&nome=<%=a.getNome()%>&fone=<%=a.getFone()%>&cpf=<%=a.getCpf()%>&evento=Alterar">Alterar</a></td>
+			
+			<td><a href="CadastroAluno?matricula=<%=a.getMatricula()%>&nome=&fone=&cpf=&evento=Excluir">Excluir</a></td>
 			</tr>
 		<%
 		}
